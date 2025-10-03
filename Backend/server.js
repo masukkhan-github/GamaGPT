@@ -10,46 +10,17 @@ app.use(express.json()); // ✅ parse JSON bodies
 
 app.listen(process.env.PORT, () => {
   console.log(`server is running on port ${process.env.PORT}`);
+  connectDB();
 });
 
-app.post("/test", async (req, res) => {
-  const options = {
-    method: "POST",
-    headers: {
-      "x-goog-api-key": process.env.GEMINI_API_KEY,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          role: "user",
-          parts: [
-            {
-              text: req.body.message,
-            },
-          ],
-        },
-      ],
-    }),
-  };
-
+const connectDB = async(req,res)=>{
   try {
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-      options
-    );
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    const replyText =
-      data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
-    console.log(replyText);
-    res.json({ reply: replyText });
+    await mongoose.connect(process.env.MONGO_URI)
+    console.log("Connected with database!")
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    console.log("Failed to connect with Db", error);
   }
+}
+
+app.post("/test", async (req, res) => {
 });
