@@ -1,12 +1,16 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { chatRouter } from "./routes/chat.routes.js";
+import mongoose from 'mongoose';
+
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // ✅ parse JSON bodies
+app.use("/api", chatRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`server is running on port ${process.env.PORT}`);

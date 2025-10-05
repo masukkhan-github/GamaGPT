@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-const geminiAPIResponse = async(message) =>{
-     const options = {
+const geminiAPIResponse = async (message) => {
+  const options = {
     method: "POST",
     headers: {
       "x-goog-api-key": process.env.GEMINI_API_KEY,
@@ -13,7 +13,7 @@ const geminiAPIResponse = async(message) =>{
           role: "user",
           parts: [
             {
-              text: req.body.message,
+              text: message,
             },
           ],
         },
@@ -27,19 +27,20 @@ const geminiAPIResponse = async(message) =>{
       options
     );
 
-    // if (!response.ok) {
-    //   throw new Error(`API error: ${response.status} ${response.statusText}`);
-    // }
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
 
     const data = await response.json();
     const replyText =
       data.candidates?.[0]?.content?.parts?.[0]?.text || "No response";
-    console.log(replyText);
-    res.json({ reply: replyText });
+
+    return replyText;
+
   } catch (error) {
     console.error("Error calling Gemini API:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
-}
+};
 
 export default geminiAPIResponse;
