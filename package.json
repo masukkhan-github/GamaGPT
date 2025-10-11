@@ -1,0 +1,25 @@
+{
+  "name": "gamagpt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node Backend/server.js",
+    "build": "npm install --prefix Backend && npm install --prefix Frontend && npm run build --prefix Frontend"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masukkhan-github/GamaGPT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/masukkhan-github/GamaGPT/issues"
+  },
+  "homepage": "https://github.com/masukkhan-github/GamaGPT#readme"
+}
