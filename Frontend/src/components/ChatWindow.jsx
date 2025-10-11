@@ -28,7 +28,7 @@ function ChatWindow() {
         try {
             const response = await fetch("http://localhost:8000/api/chat", options);
             const res = await response.json();
-            console.log(res);
+            // console.log(res);
             setReply(res.reply);
         } catch(err) {
             console.log(err);
